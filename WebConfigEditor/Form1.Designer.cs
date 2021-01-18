@@ -49,9 +49,13 @@ namespace EditWebConfig_project
             this.label1 = new System.Windows.Forms.Label();
             this.btnChange = new System.Windows.Forms.Button();
             this.worker = new System.ComponentModel.BackgroundWorker();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.statusStripLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStripProject = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainTabCtrl.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
             this.homeTabPage.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainTabCtrl
@@ -97,6 +101,7 @@ namespace EditWebConfig_project
             this.projComboBox.Name = "projComboBox";
             this.projComboBox.Size = new System.Drawing.Size(390, 25);
             this.projComboBox.TabIndex = 24;
+            this.projComboBox.SelectedIndexChanged += new System.EventHandler(this.projComboBox_SelectedIndexChanged);
             this.projComboBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.projComboBox_KeyDown);
             // 
             // btnPathSelect
@@ -222,13 +227,39 @@ namespace EditWebConfig_project
             this.btnChange.UseVisualStyleBackColor = true;
             this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
             // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStripLabel,
+            this.statusStripProject});
+            this.statusStrip.Location = new System.Drawing.Point(0, 193);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(460, 22);
+            this.statusStrip.TabIndex = 11;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // statusStripLabel
+            // 
+            this.statusStripLabel.Name = "statusStripLabel";
+            this.statusStripLabel.Size = new System.Drawing.Size(50, 17);
+            this.statusStripLabel.Text = "Project: ";
+            // 
+            // statusStripProject
+            // 
+            this.statusStripProject.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(116)))), ((int)(((byte)(255)))));
+            this.statusStripProject.Name = "statusStripProject";
+            this.statusStripProject.Size = new System.Drawing.Size(0, 17);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(460, 196);
+            this.ClientSize = new System.Drawing.Size(460, 215);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.mainTabCtrl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
             this.Text = "Web.config Editor";
             this.mainTabCtrl.ResumeLayout(false);
@@ -236,7 +267,10 @@ namespace EditWebConfig_project
             this.settingsTabPage.PerformLayout();
             this.homeTabPage.ResumeLayout(false);
             this.homeTabPage.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -258,6 +292,9 @@ namespace EditWebConfig_project
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnChange;
         private System.Windows.Forms.Button btnLoad;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel statusStripLabel;
+        private System.Windows.Forms.ToolStripStatusLabel statusStripProject;
     }
 }
 

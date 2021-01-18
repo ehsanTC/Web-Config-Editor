@@ -288,5 +288,16 @@ namespace EditWebConfig_project
             if (e.KeyData == Keys.Enter)
                 ChangeConfig();
         }
+
+        private void projComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cmb = (ComboBox)sender;
+            SetStatusStripText(cmb.Text);
+        }
+
+        private void SetStatusStripText(string text)
+        {
+            statusStripProject.Text = text;
+        }
     }
 }
