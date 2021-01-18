@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace EditWebConfig_project
+namespace WebConfigEditor
 {
     partial class Form1
     {

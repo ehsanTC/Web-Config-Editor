@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("EditWebConfig_project")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("WebConfigEditor")]
+[assembly: AssemblyDescription("A tool to change web configs.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("EditWebConfig_project")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("Ehsan Toghian")]
+[assembly: AssemblyProduct("WebConfigEditor")]
+[assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

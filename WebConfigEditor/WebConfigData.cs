@@ -1,5 +1,5 @@
 ﻿
-namespace EditWebConfig_project
+namespace WebConfigEditor
 {
     class WebConfigData
     {

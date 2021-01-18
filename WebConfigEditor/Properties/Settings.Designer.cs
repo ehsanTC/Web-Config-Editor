@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EditWebConfig_project.Properties
+namespace WebConfigEditor.Properties
 {
 
 

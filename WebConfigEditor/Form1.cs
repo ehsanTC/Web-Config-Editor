@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Dynamic;
 
-namespace EditWebConfig_project
+namespace WebConfigEditor
 {
     public partial class Form1 : Form
     {
