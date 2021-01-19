@@ -269,12 +269,22 @@ namespace WebConfigEditor
 
             ListFiles configFiles = new ListFiles(txtSourceCodePath.Text, projComboBox.Text);
             FileInfo legoWebConfig = new FileInfo(configFiles.GetFiles().ElementAt(0));
-            XmlReadWrite reader = new XmlReadWrite(legoWebConfig.FullName);
-            var config = reader.ReadConfig();
 
-            txtSource.Text = config.DataSource;
-            txtInit.Text = config.InitialCatalog;
-            txtBase.Text = config.BaseCatalog;
+            try
+            {
+                XmlReadWrite reader = new XmlReadWrite(legoWebConfig.FullName);
+                var config = reader.ReadConfig();
+
+                txtSource.Text = config.DataSource;
+                txtInit.Text = config.InitialCatalog;
+                txtBase.Text = config.BaseCatalog;
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("The selected project is not valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                mainTabCtrl.SelectedIndex = 0;
+                projComboBox.Focus();
+            }
         }
 
         private void txtInit_KeyDown(object sender, KeyEventArgs e)
