@@ -309,5 +309,10 @@ namespace WebConfigEditor
         {
             statusStripProject.Text = text;
         }
+
+        private void aboutTextBox_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText);
+        }
     }
 }

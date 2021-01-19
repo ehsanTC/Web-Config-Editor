@@ -52,16 +52,20 @@ namespace WebConfigEditor
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusStripLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripProject = new System.Windows.Forms.ToolStripStatusLabel();
+            this.aboutTabPage = new System.Windows.Forms.TabPage();
+            this.aboutTextBox = new System.Windows.Forms.RichTextBox();
             this.mainTabCtrl.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
             this.homeTabPage.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            this.aboutTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainTabCtrl
             // 
             this.mainTabCtrl.Controls.Add(this.settingsTabPage);
             this.mainTabCtrl.Controls.Add(this.homeTabPage);
+            this.mainTabCtrl.Controls.Add(this.aboutTabPage);
             this.mainTabCtrl.Location = new System.Drawing.Point(7, 4);
             this.mainTabCtrl.Name = "mainTabCtrl";
             this.mainTabCtrl.SelectedIndex = 0;
@@ -250,6 +254,25 @@ namespace WebConfigEditor
             this.statusStripProject.Name = "statusStripProject";
             this.statusStripProject.Size = new System.Drawing.Size(0, 17);
             // 
+            // aboutTabPage
+            // 
+            this.aboutTabPage.Controls.Add(this.aboutTextBox);
+            this.aboutTabPage.Location = new System.Drawing.Point(4, 22);
+            this.aboutTabPage.Name = "aboutTabPage";
+            this.aboutTabPage.Size = new System.Drawing.Size(439, 160);
+            this.aboutTabPage.TabIndex = 2;
+            this.aboutTabPage.Text = "About";
+            this.aboutTabPage.UseVisualStyleBackColor = true;
+            // 
+            // aboutTextBox
+            // 
+            this.aboutTextBox.Location = new System.Drawing.Point(3, 3);
+            this.aboutTextBox.Name = "aboutTextBox";
+            this.aboutTextBox.Size = new System.Drawing.Size(433, 157);
+            this.aboutTextBox.TabIndex = 0;
+            this.aboutTextBox.Text = resources.GetString("aboutTextBox.Text");
+            this.aboutTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.aboutTextBox_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -269,6 +292,7 @@ namespace WebConfigEditor
             this.homeTabPage.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.aboutTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -295,6 +319,8 @@ namespace WebConfigEditor
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabel;
         private System.Windows.Forms.ToolStripStatusLabel statusStripProject;
+        private System.Windows.Forms.TabPage aboutTabPage;
+        private System.Windows.Forms.RichTextBox aboutTextBox;
     }
 }
 
