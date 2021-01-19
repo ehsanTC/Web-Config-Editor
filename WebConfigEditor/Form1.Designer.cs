@@ -266,9 +266,11 @@ namespace WebConfigEditor
             // 
             // aboutTextBox
             // 
-            this.aboutTextBox.Location = new System.Drawing.Point(3, 3);
+            this.aboutTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.aboutTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aboutTextBox.Location = new System.Drawing.Point(3, 14);
             this.aboutTextBox.Name = "aboutTextBox";
-            this.aboutTextBox.Size = new System.Drawing.Size(433, 157);
+            this.aboutTextBox.Size = new System.Drawing.Size(433, 146);
             this.aboutTextBox.TabIndex = 0;
             this.aboutTextBox.Text = resources.GetString("aboutTextBox.Text");
             this.aboutTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.aboutTextBox_LinkClicked);
