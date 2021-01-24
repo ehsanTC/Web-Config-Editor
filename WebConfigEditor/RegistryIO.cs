@@ -8,9 +8,9 @@ using Microsoft.Win32;
 
 namespace WebConfigEditor
 {
-    class RegistryIO : IDisposable
+    class RegistryIo : IDisposable
     {
-        private static RegistryKey key;
+        private readonly RegistryKey _key;
         private const int TotalConfigs = 10;
         private const string AppAddress = @"SOFTWARE\WebConfigEditor";
         public  const string RootPath = "root_path";
@@ -19,20 +19,19 @@ namespace WebConfigEditor
         public  const string InitialCatalog = "InitialCatalog";
         public  const string BaseCatalog = "BaseCatalog";
 
-        public RegistryIO()
+        public RegistryIo()
         {
-            if (key == null)
-                key = Registry.CurrentUser.CreateSubKey(AppAddress, true);
+            _key = Registry.CurrentUser.CreateSubKey(AppAddress, true);
         }
 
         public string GetProjectPath() => this.GetValue(RootPath);
         public string GetProject() => this.GetValue(Project);
-        private string GetValue(string k) => key?.GetValue(k)?.ToString();
-        private void SetValue(string aKey, string value) => key.SetValue(aKey, value);
+        private string GetValue(string k) => _key?.GetValue(k)?.ToString();
+        private void SetValue(string aKey, string value) => _key.SetValue(aKey, value);
 
         public void Dispose()
         {
-            key?.Close();
+            _key?.Close();
         }
 
         public IEnumerable<WebConfigData> GetConfigsList()

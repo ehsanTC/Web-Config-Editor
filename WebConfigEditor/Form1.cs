@@ -25,7 +25,7 @@ namespace WebConfigEditor
         {
             worker.DoWork += (sender, eventHandler) =>
             {
-                RegistryIO reader = new RegistryIO();
+                RegistryIo reader = new RegistryIo();
                 var result = new Dictionary<string, object>
                 {
                     ["ProjectName"] = reader.GetProject(),
@@ -244,7 +244,7 @@ namespace WebConfigEditor
 
         private void SaveConfigs()
         {
-            using (RegistryIO writer = new RegistryIO())
+            using (RegistryIo writer = new RegistryIo())
             {
                 writer.WriteProject(projComboBox.Text);
                 writer.WriteProjectPath(txtSourceCodePath.Text);
