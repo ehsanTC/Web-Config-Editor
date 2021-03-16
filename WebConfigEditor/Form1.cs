@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -7,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using System.Dynamic;
 
 namespace WebConfigEditor
 {
@@ -15,6 +13,8 @@ namespace WebConfigEditor
     {
         private BackgroundWorker worker;
         private List<WebConfigData> webConfigList;
+        private List<string> excludedProjects;
+
         public Form1()
         {
             InitializeComponent();
@@ -40,6 +40,8 @@ namespace WebConfigEditor
                 // if an exception not occurred during DoWork
                 if (eventHandler.Error == null)
                 {
+                    ReadExcludedProjects();
+
                     var result = (Dictionary<string, object>) eventHandler.Result;
 
                     if (!String.IsNullOrEmpty(result["ProjectPath"]?.ToString()))
@@ -47,22 +49,62 @@ namespace WebConfigEditor
                         txtSourceCodePath.Text = result["ProjectPath"].ToString();
                         PopulateProjComboBoxData();
 
-                        if (!String.IsNullOrEmpty(result["ProjectName"]?.ToString()))
+                        if (!String.IsNullOrEmpty(result["ProjectName"]?.ToString())
+                            && !this.excludedProjects.Contains(result["ProjectName"]?.ToString()))
                             projComboBox.Text = result["ProjectName"].ToString();
 
                         mainTabCtrl.SelectTab(1);
                     }
 
                     webConfigList = (List<WebConfigData>) result["WebConfigList"];
+                    FillDataSourceTextBox();
                 }
                     
             };
             worker.RunWorkerAsync();
         }
 
+        private void ReadExcludedProjects()
+        {
+            using (RegistryIo registry = new RegistryIo())
+            {
+                this.excludedProjects = registry.GetExcludedProjects().ToList();
+
+                StringBuilder excludedProj = new StringBuilder();
+                foreach (var x in this.excludedProjects)
+                    excludedProj.Append(x + Environment.NewLine);
+                
+                txtExcludedProj.Text = excludedProj.ToString();
+            }
+        }
+
+        private void FillDataSourceTextBox()
+        {
+            AutoCompleteStringCollection serverIps = new AutoCompleteStringCollection();
+            webConfigList.ForEach(w => serverIps.Add(w.DataSource));
+
+            txtSource.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            txtSource.AutoCompleteCustomSource = serverIps;
+        }
+
         private void btnChange_Click(object sender, EventArgs e)
         {
             ChangeConfig();
+        }
+
+        private void SaveExcludedProjects()
+        {
+            if (String.IsNullOrEmpty(txtExcludedProj.Text))
+                return;
+
+            string[] projects = txtExcludedProj.Text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            excludedProjects.Clear();
+            excludedProjects.AddRange(projects);
+
+            using (RegistryIo writer = new RegistryIo())
+            {
+                writer.WriteExcludedProjects(projects.Where(x => !string.IsNullOrEmpty(x)).ToArray());
+            }
         }
 
         private void ChangeConfig()
@@ -175,7 +217,11 @@ namespace WebConfigEditor
                     .All(dir =>
                     {
                         FileInfo fileInfo = new FileInfo(dir);
-                        projComboBox.Items.Add(fileInfo.Name);
+                        if (excludedProjects == null || excludedProjects.Count == 0)
+                            projComboBox.Items.Add(fileInfo.Name);
+
+                        if (excludedProjects != null && !excludedProjects.Contains(fileInfo.Name))
+                            projComboBox.Items.Add(fileInfo.Name);
                         return true;
                     });
 
@@ -255,7 +301,6 @@ namespace WebConfigEditor
                     BaseCatalog = txtBase.Text
                 });
             }
-
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
@@ -313,6 +358,40 @@ namespace WebConfigEditor
         private void aboutTextBox_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(e.LinkText);
+        }
+
+        private void txtSource_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData != Keys.Enter)
+                return;
+
+            try
+            {
+                WebConfigData selectData = webConfigList.First(w => w.DataSource == txtSource.Text);
+                txtBase.Text = selectData.BaseCatalog;
+                txtInit.Text = selectData.InitialCatalog;
+                SelectNextControl((Control)sender, true, true, true, true);
+            }
+            catch (Exception){}
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveExcludedProjects();
+
+            // Save selected project
+            string selectedProj = projComboBox.Text;
+            PopulateProjComboBoxData();
+
+            if (!this.excludedProjects.Contains(selectedProj))
+                projComboBox.Text = selectedProj;
+            else
+                projComboBox.SelectedIndex = 0;
+
+            MessageBox.Show("The excluded project will not be shown in the settings.",
+                "Success",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Asterisk);
         }
     }
 }

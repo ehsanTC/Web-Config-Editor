@@ -12,13 +12,14 @@ namespace WebConfigEditor
     {
         private readonly RegistryKey _key;
         private const int TotalConfigs = 10;
+        private const char Separator = ';';
+        private const string ExcludedProjs = "ExcludedProjects";
         private const string AppAddress = @"SOFTWARE\WebConfigEditor";
         public  const string RootPath = "root_path";
         public  const string Project = "project";
         public  const string DataSource = "DataSource";
         public  const string InitialCatalog = "InitialCatalog";
         public  const string BaseCatalog = "BaseCatalog";
-
         public RegistryIo()
         {
             _key = Registry.CurrentUser.CreateSubKey(AppAddress, true);
@@ -93,6 +94,16 @@ namespace WebConfigEditor
                     SetValue($"{InitialCatalog}_{index}", config.InitialCatalog);
                 }
             }
+        }
+
+        public void WriteExcludedProjects(string[] projects)
+        {
+            SetValue(ExcludedProjs, String.Join(Separator.ToString(), projects));            
+        }
+
+        public IEnumerable<string> GetExcludedProjects()
+        {
+            return GetValue(ExcludedProjs)?.Split(Separator).ToList() ?? new List<string>();
         }
     }
 }

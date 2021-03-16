@@ -48,23 +48,29 @@ namespace WebConfigEditor
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnChange = new System.Windows.Forms.Button();
+            this.aboutTabPage = new System.Windows.Forms.TabPage();
+            this.aboutTextBox = new System.Windows.Forms.RichTextBox();
             this.worker = new System.ComponentModel.BackgroundWorker();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusStripLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripProject = new System.Windows.Forms.ToolStripStatusLabel();
-            this.aboutTabPage = new System.Windows.Forms.TabPage();
-            this.aboutTextBox = new System.Windows.Forms.RichTextBox();
+            this.filterTabPage = new System.Windows.Forms.TabPage();
+            this.txtExcludedProj = new System.Windows.Forms.TextBox();
+            this.lblExclude = new System.Windows.Forms.Label();
+            this.btnSave = new System.Windows.Forms.Button();
             this.mainTabCtrl.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
             this.homeTabPage.SuspendLayout();
-            this.statusStrip.SuspendLayout();
             this.aboutTabPage.SuspendLayout();
+            this.statusStrip.SuspendLayout();
+            this.filterTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainTabCtrl
             // 
             this.mainTabCtrl.Controls.Add(this.settingsTabPage);
             this.mainTabCtrl.Controls.Add(this.homeTabPage);
+            this.mainTabCtrl.Controls.Add(this.filterTabPage);
             this.mainTabCtrl.Controls.Add(this.aboutTabPage);
             this.mainTabCtrl.Location = new System.Drawing.Point(7, 4);
             this.mainTabCtrl.Name = "mainTabCtrl";
@@ -188,11 +194,13 @@ namespace WebConfigEditor
             // 
             // txtSource
             // 
+            this.txtSource.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.txtSource.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSource.Location = new System.Drawing.Point(75, 16);
             this.txtSource.Name = "txtSource";
             this.txtSource.Size = new System.Drawing.Size(358, 23);
             this.txtSource.TabIndex = 16;
+            this.txtSource.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSource_KeyDown);
             // 
             // label3
             // 
@@ -231,6 +239,27 @@ namespace WebConfigEditor
             this.btnChange.UseVisualStyleBackColor = true;
             this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
             // 
+            // aboutTabPage
+            // 
+            this.aboutTabPage.Controls.Add(this.aboutTextBox);
+            this.aboutTabPage.Location = new System.Drawing.Point(4, 22);
+            this.aboutTabPage.Name = "aboutTabPage";
+            this.aboutTabPage.Size = new System.Drawing.Size(439, 160);
+            this.aboutTabPage.TabIndex = 2;
+            this.aboutTabPage.Text = "About";
+            this.aboutTabPage.UseVisualStyleBackColor = true;
+            // 
+            // aboutTextBox
+            // 
+            this.aboutTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.aboutTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aboutTextBox.Location = new System.Drawing.Point(3, 14);
+            this.aboutTextBox.Name = "aboutTextBox";
+            this.aboutTextBox.Size = new System.Drawing.Size(433, 146);
+            this.aboutTextBox.TabIndex = 0;
+            this.aboutTextBox.Text = resources.GetString("aboutTextBox.Text");
+            this.aboutTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.aboutTextBox_LinkClicked);
+            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -254,26 +283,44 @@ namespace WebConfigEditor
             this.statusStripProject.Name = "statusStripProject";
             this.statusStripProject.Size = new System.Drawing.Size(0, 17);
             // 
-            // aboutTabPage
+            // filterTabPage
             // 
-            this.aboutTabPage.Controls.Add(this.aboutTextBox);
-            this.aboutTabPage.Location = new System.Drawing.Point(4, 22);
-            this.aboutTabPage.Name = "aboutTabPage";
-            this.aboutTabPage.Size = new System.Drawing.Size(439, 160);
-            this.aboutTabPage.TabIndex = 2;
-            this.aboutTabPage.Text = "About";
-            this.aboutTabPage.UseVisualStyleBackColor = true;
+            this.filterTabPage.Controls.Add(this.btnSave);
+            this.filterTabPage.Controls.Add(this.lblExclude);
+            this.filterTabPage.Controls.Add(this.txtExcludedProj);
+            this.filterTabPage.Location = new System.Drawing.Point(4, 22);
+            this.filterTabPage.Name = "filterTabPage";
+            this.filterTabPage.Size = new System.Drawing.Size(439, 160);
+            this.filterTabPage.TabIndex = 3;
+            this.filterTabPage.Text = "Filter";
+            this.filterTabPage.UseVisualStyleBackColor = true;
             // 
-            // aboutTextBox
+            // txtExcludedProj
             // 
-            this.aboutTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.aboutTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aboutTextBox.Location = new System.Drawing.Point(3, 14);
-            this.aboutTextBox.Name = "aboutTextBox";
-            this.aboutTextBox.Size = new System.Drawing.Size(433, 146);
-            this.aboutTextBox.TabIndex = 0;
-            this.aboutTextBox.Text = resources.GetString("aboutTextBox.Text");
-            this.aboutTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.aboutTextBox_LinkClicked);
+            this.txtExcludedProj.Location = new System.Drawing.Point(4, 31);
+            this.txtExcludedProj.Multiline = true;
+            this.txtExcludedProj.Name = "txtExcludedProj";
+            this.txtExcludedProj.Size = new System.Drawing.Size(432, 98);
+            this.txtExcludedProj.TabIndex = 1;
+            // 
+            // lblExclude
+            // 
+            this.lblExclude.AutoSize = true;
+            this.lblExclude.Location = new System.Drawing.Point(4, 12);
+            this.lblExclude.Name = "lblExclude";
+            this.lblExclude.Size = new System.Drawing.Size(206, 13);
+            this.lblExclude.TabIndex = 2;
+            this.lblExclude.Text = "Excluded projects: (separated by new line)";
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(361, 134);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 3;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // Form1
             // 
@@ -292,9 +339,11 @@ namespace WebConfigEditor
             this.settingsTabPage.PerformLayout();
             this.homeTabPage.ResumeLayout(false);
             this.homeTabPage.PerformLayout();
+            this.aboutTabPage.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            this.aboutTabPage.ResumeLayout(false);
+            this.filterTabPage.ResumeLayout(false);
+            this.filterTabPage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -323,6 +372,10 @@ namespace WebConfigEditor
         private System.Windows.Forms.ToolStripStatusLabel statusStripProject;
         private System.Windows.Forms.TabPage aboutTabPage;
         private System.Windows.Forms.RichTextBox aboutTextBox;
+        private System.Windows.Forms.TabPage filterTabPage;
+        private System.Windows.Forms.Label lblExclude;
+        private System.Windows.Forms.TextBox txtExcludedProj;
+        private System.Windows.Forms.Button btnSave;
     }
 }
 
