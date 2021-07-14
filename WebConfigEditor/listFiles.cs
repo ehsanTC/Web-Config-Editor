@@ -30,6 +30,7 @@ namespace WebConfigEditor
                 Path.Combine(rootFolderPath, projectFolder, @"ProcessManager\WizardManagerPresentation\Web.config"),
                 Path.Combine(rootFolderPath, projectFolder, @"TA\TAPresentation\TAPresentation\Web.config"),
                 Path.Combine(rootFolderPath, projectFolder, @"Restaurant\RstPresentation\RstPresentation\Web.config"),
+                Path.Combine(rootFolderPath, projectFolder, @"Transport\TrsPresentation\Web.config")
             };
         }
 

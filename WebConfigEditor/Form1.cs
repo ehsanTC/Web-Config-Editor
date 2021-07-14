@@ -207,7 +207,7 @@ namespace WebConfigEditor
 
         private void PopulateProjComboBoxData()
         {
-            if (projComboBox.Items.Count > 1)
+            if (projComboBox.Items.Count > 0)
                 projComboBox.Items.Clear();
 
             projComboBox.Items.Add(" - Select Project - ");
